@@ -144,3 +144,7 @@ before completion, report the last observed status; do not invent a terminal res
 
 Stop after the requested result. Do not expand coverage, schedule recurring
 Runs, or promise unavailable capabilities unless asked.
+
+## Product memory
+
+Published requirements can inform expected behavior. Historical observations do not establish correctness: preserve the user’s intended assertion and verify current evidence. Imported document proposals need owner review. Never include passwords, tokens, or signed URLs in memory or Test text. Frozen Run memory revisions remain audit context even when current records are archived.

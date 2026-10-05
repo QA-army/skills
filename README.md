@@ -1,9 +1,9 @@
 # QA.army skills
 
-Public instructions for authoring Tests and using the QA.army CLI.
+Public agent instructions for using QA.army and authoring Tests.
 
-- `skills/qa-army-cli/SKILL.md`: CLI setup, capabilities and reporting.
-- `skills/qa-army-test-writing/SKILL.md`: writing saved Tests.
+- [CLI skill](skills/qa-army-cli/SKILL.md): authentication, supported commands, Runs, and results.
+- [Test-writing skill](skills/qa-army-test-writing/SKILL.md): ordered steps, assertions, and evidence.
+- [Shared setup prompt](contracts/setup-pr-qa.md): canonical product/marketing handoff.
 
-These skills call the canonical authorized product interfaces. They contain no
-private runtime skills, credentials, or backend implementation.
+Read [AGENTS.md](AGENTS.md). Validate commands against the current CLI/MCP/API and run consuming parity checks when shared contracts change. This repo has no npm build; private runtime skills and credentials belong elsewhere.

@@ -151,3 +151,14 @@ Runs, or promise unavailable capabilities unless asked.
 ## Product memory
 
 Published requirements can inform expected behavior. Historical observations do not establish correctness: preserve the user’s intended assertion and verify current evidence. Imported document proposals need owner review. Never include passwords, tokens, or signed URLs in memory or Test text. Frozen Run memory revisions remain audit context even when current records are archived.
+
+
+## Preserve generated journeys
+
+Focused generation in the QA.army app may combine steps from several existing Tests when journey discovery is enabled. CLI/MCP save supplied steps; keep using their supported authoring operations, never internal generation endpoints.
+
+When reading or editing a generated Test, preserve its optional `journey` composition: exact source Test/step IDs and versions, inferred transitions, identity captures/checks, and unresolved prerequisites. Keep the original primitive types of cited fragments. An ACT's internal verification does not replace independent Verify or Screenshot steps.
+
+Use `{{binding.name}}` only with a saved journey binding observed in an earlier enabled ACT or Verify step. Read a unique visible entity/account identifier, then compare the freshly observed identifier in the final Verify. Do not guess identities, copy expected values into observations, or treat prose such as “remember this game” as a binding. Credentials are never identity bindings.
+
+Review unresolved prerequisites before execution. A graph outage or stale source must not become unrelated fallback coverage. A generated plan, inferred connection, or previous successful receipt is not current proof: report the new Run's server verdict and committed evidence. Preserve failed findings as failures; never repeat an ambiguous mutation to obtain a pass.

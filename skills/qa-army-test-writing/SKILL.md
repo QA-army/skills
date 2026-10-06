@@ -49,7 +49,7 @@ The request uses the same types and ordered steps as the Test editor:
 
 | UI option | API `type` | Authoring rule |
 | --- | --- | --- |
-| Act | `act` | One bounded user action |
+| Act | `act` | One bounded user action, followed by internal outcome verification |
 | Assert | `assert` | One observable expected outcome |
 | Login | `login` | Reference an existing same-Project `account_id`; never embed credentials |
 | Files | `files` | State the file interaction and available test data |
@@ -58,9 +58,11 @@ The request uses the same types and ordered steps as the Test editor:
 | Microphone | `microphone` | State the audio interaction and prerequisites |
 
 Steps run in array order. Set `enabled: false` to retain a step but skip it.
-Include at least one enabled assertion. Availability of a step type does not
+Keep explicit Verify steps for independent and final journey expectations. Screenshot-only Tests are valid: passing means the requested captures completed, not that product behavior was verified. Availability of a step type does not
 establish that its required account, file, device, or browser capability exists.
 If a prerequisite is missing, resolve it before running; never promise a pass.
+
+ACT accepts an optional `verification` object with `expectation`, `timeout_ms` (default 30000, 1000–120000), and up to eight `checks` containing a visible `query` and scalar `equals` value. Exact values preserve their type. When omitted, the server infers and freezes an outcome before execution; ambiguous intent produces an actionable error before mutation. A completed click alone cannot pass ACT. Reobservation is read-only and bounded to three observations and the Run deadline. Explicit Assert steps remain separate and Screenshot remains a capture primitive.
 
 For an application whose signup entry uses these controls, an authored payload is:
 
@@ -92,7 +94,8 @@ For an application whose signup entry uses these controls, an authored payload i
     {
       "type": "act",
       "instruction": "Click Get started",
-      "enabled": true
+      "enabled": true,
+      "verification": { "expectation": "The signup form is visible" }
     },
     {
       "type": "assert",
@@ -131,7 +134,7 @@ wait for its terminal result. Preserve the server's outcome:
   when the user explicitly requests it; never spend the remaining allowance
   merely because it is available.
 
-- `PASSED`: every required expectation was observed.
+- `PASSED`: every required expectation was observed and requested captures completed.
 - `FAILED`: the product violated an expectation.
 - `ERROR`: execution could not establish a trustworthy product result.
 

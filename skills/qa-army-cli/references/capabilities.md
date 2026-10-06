@@ -51,3 +51,11 @@ When the Workspace is enrolled and the installed CLI supports them, use `qa-army
 `prs settings` and `prs configure` use an existing integration ID. Configuration is owner-only and requires the selected GitHub repository, selected Vercel Project, sandbox confirmation, and any required sandbox accounts. Restricted agent setup credentials cannot manage the pilot.
 
 Cancellation, explicit rerun and regression promotion use `prs cancel`, `prs rerun` and `prs promote` with a stable `--request-key`. A rerun may consume up to three new Runs; explain that before requesting one. Never retry an ambiguous target mutation automatically. Generated Tests are immutable; promotion creates an editable copy in the chosen group. Do not call missing coverage, infrastructure errors or absent evidence a pass. Pilot thresholds are targets, not proven results.
+
+## Daily clarification (release validation pending)
+
+`qa-army memories questions --project prj_...` / `memories.questions` reads the stable UTC-day Project questions. Ask the customer before selecting intended behavior; never submit a default choice. `qa-army memories answer --project prj_... --input JSON` / `memories.answer` accepts `day`, `question_id`, prior answer `revision` (0 initially), `choice` (0–2), `skipped`, and optional `elaboration`. Skip uses null choice. Respect conflicts and refresh before correction.
+
+All non-skipped answers become owner-review proposals, including owner answers. Treat them as declared intent, not observed Run facts. Publication and canonical retrieval remain server-owned. Inspect earlier conflicting answers before approval. Historical Test expectations and Run snapshots are unchanged. An exhausted set is not permission to invent questions, answers, evidence or confidence.
+
+To revisit a saved set, select its date in Memory, use CLI `memories questions --project prj_... --day YYYY-MM-DD`, or pass `day` to MCP `memories.questions`. The historical API is `GET /v1/projects/{projectId}/memory/clarifications/{day}`. Only existing sets are returned; prior answers remain correctable with revision checks.

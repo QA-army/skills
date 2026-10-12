@@ -162,3 +162,15 @@ When reading or editing a generated Test, preserve its optional `journey` compos
 Use `{{binding.name}}` only with a saved journey binding observed in an earlier enabled ACT or Verify step. Read a unique visible entity/account identifier, then compare the freshly observed identifier in the final Verify. Do not guess identities, copy expected values into observations, or treat prose such as “remember this game” as a binding. Credentials are never identity bindings.
 
 Review unresolved prerequisites before execution. A graph outage or stale source must not become unrelated fallback coverage. A generated plan, inferred connection, or previous successful receipt is not current proof: report the new Run's server verdict and committed evidence. Preserve failed findings as failures; never repeat an ambiguous mutation to obtain a pass.
+
+## Maintain existing coverage
+
+Read the Test and its current version, then send the complete editable
+definition with `qa-army tests update --test <testId> --version <version>
+--input <JSON>`. Preserve steps, settings and journey metadata. Set `group_id`
+to an authorized Test Group, or `enabled: false` when prerequisites are missing.
+Keep the intended assertions; saving an edit does not execute the Test.
+The same claimed WorkOS agent identity supports Test Group management, Test
+updates and Run cancellation. Test deletion, credential access and administration
+remain outside that capability. Never substitute missing screenshots or
+unexecuted steps with a passing result.

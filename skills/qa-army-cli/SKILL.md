@@ -71,6 +71,17 @@ but registration is not native device selection or Mobile Test execution. Do
 not promise or report a native Run; those CLI variants return
 `REQUEST_CAPABILITY`.
 
+Register a native build only with an authenticated user session or profile API
+key; setup-only agent credentials do not authorize this operation:
+
+1. Run `qa-army builds reserve --project <projectId> --input JSON
+   --request-key <stableKey>`. The JSON includes the filename, platform, byte
+   size, and lowercase SHA-256 digest. Reuse the key after an uncertain result.
+2. PUT the exact original file to the receipt's short-lived upload URL using
+   its supplied headers. Do not send the QA.army Product bearer token or log
+   the upload URL.
+3. Run `qa-army builds complete --build <buildId>`.
+
 ## Missing operations
 
 Recognized competitor-parity commands that lack a production QA.army API return

@@ -1,24 +1,39 @@
 # QA.army CLI capability map
 
-Use `qa-army capabilities --json` as the runtime authority. This reference
-explains the intended mapping.
+Use `qa-army capabilities --json` to inspect the installed runtime inventory.
+The canonical public API remains the customer-support boundary. This reference
+enumerates the CLI command families and calls out release-validation and pilot
+limits where the runtime inventory is stale.
 
-## Available
+## Command inventory
 
-| Area | Commands |
-| --- | --- |
-| Identity | `auth agent-register`, `status`, `logout`, `signout` |
-| First setup | `setup`, `create test` |
-| Workspaces | `list`, `create`, `get`, `update` |
-| Projects | `list`, `create`, `star`, `unstar` |
-| Test Groups | `list`, `get`, `create`, `update` |
-| Tests | `list`, `get`, `create`, `update`, `archive`, `delete`, `run` |
-| Runs | `list`, `create`, `get`, `start`, `watch`, `wait`, `cancel` |
-| Account | `api-keys list`, `api-keys create`, `api-keys revoke` |
+| Area | Commands | Contract status |
+| --- | --- | --- |
+| Identity | `auth agent-register`, `auth status`, `auth logout`; root aliases `status`, `logout`, `signout` | Available |
+| First setup | `setup`, `create test` | Available |
+| Workspaces | `workspaces list`, `workspaces create`, `workspaces get`, `workspaces update` | Available |
+| Projects | `projects list`, `projects create` | Available |
+| Workspace access | `members list`, `invitations create` | Available |
+| Native builds | `builds list`, `builds reserve`, `builds complete` | Registration only; not native execution |
+| Test Groups | `groups list`, `groups get`, `groups create`, `groups update` | Available |
+| Tests | `tests list`, `tests get`, `tests create`, `tests update`, `tests archive`, `tests delete`, `tests run` | Available |
+| Runs | `runs list`, `runs create`, `runs get`, `runs start`, `runs watch`, `runs wait`, `runs cancel` | Available |
+| Account | `api-keys list`, `api-keys create`, `api-keys revoke` | Available |
+| Product memory | `memories questions`, `memories answer`, `memories list`, `memories create`, `memories update`, `memories approve`, `memories reject`, `memories archive`, `memories clear`, `memories settings`, `memories graph`, `memories summary`, `memories import`, `memories history` | Release validation pending |
+| Dynamic PR Tests | `prs list`, `prs get`, `prs cancel`, `prs rerun`, `prs promote`, `prs settings`, `prs configure`, `prs usage` | Assisted pilot; DOGFOOD-PENDING |
+| CLI metadata | `capabilities`, `docs`, `request capability` | Available |
+
+The CLI currently accepts `projects star` and `projects unstar`, but their
+endpoint is absent from the canonical public API. Do not use or advertise them
+as customer-supported commands. The CLI must return a capability request until
+the API publishes that contract.
 
 `tests run` queues one durable saved Test in QA.army cloud. `--wait` returns the
 truthful terminal outcome. Local-browser, group, environment, and uploaded-app
 variants remain unavailable.
+
+`builds` registers immutable native artifacts. It does not select a device,
+execute a Mobile Test, or prove a passing Run.
 
 ## [request capability]
 
@@ -27,8 +42,8 @@ variants remain unavailable.
 | Agent bootstrap | `agent init` |
 | Local browser | `run`, `tests run --local` |
 | Project lifecycle | `projects get`, `projects update`, `projects delete` |
-| Environments | `projects environments`, `environments-create`, `environments-delete` |
-| Project credentials/files | `projects credentials`, `credentials-create`, `files` |
+| Environments | `projects environments`, `projects environments-create`, `projects environments-delete` |
+| Project credentials/files | `projects credentials`, `projects credentials-create`, `projects files` |
 | Test Groups | `groups delete`, `groups add-test`, `groups remove-test` |
 | Test toggles | `tests enable`, `tests disable` |
 | Group/mobile variants | `tests run --group`, platform/app/environment flags |
@@ -40,7 +55,15 @@ capability receipt so product work can add the correct server-owned contract.
 
 ## Product memory (release validation pending)
 
-Use `qa-army memories list --project prj_...` to read scoped knowledge. `create` accepts `--input` JSON; `update`, `approve`, `reject`, and `archive` require `--memory mem_... --version N`. `settings` accepts `{ "auto_learn": true }`; `graph`, `summary`, `import`, and `history` use the same Project. `clear` archives Project memory and disables automatic updates.
+Use `qa-army memories list --project prj_...` to read scoped knowledge.
+`create` requires `--project prj_... --input JSON`. `update` requires
+`--project prj_... --memory mem_... --version N --input JSON`. Review actions
+`approve`, `reject`, and `archive` require `--project`, `--memory`, and
+`--version` without `--input`. `settings` accepts `{ "auto_learn": true }`;
+`graph`, `summary`, `import`, and `history` use the same Project. `clear`
+archives Project memory and disables automatic updates. There is no canonical
+individual-memory delete operation; do not use the stale CLI alias
+`memories delete`.
 
 Use an authenticated user session or profile API key. Setup-only WorkOS agent credentials do not authorize memory management. Treat observations as historical evidence, requirements as intended behavior, and document imports as proposals requiring review. Never store credentials. Memory usage does not establish correctness or prove improvement.
 
@@ -54,7 +77,7 @@ Cancellation, explicit rerun and regression promotion use `prs cancel`, `prs rer
 
 ## Daily clarification (release validation pending)
 
-`qa-army memories questions --project prj_...` / `memories.questions` reads the stable UTC-day Project questions. Ask the customer before selecting intended behavior; never submit a default choice. `qa-army memories answer --project prj_... --input JSON` / `memories.answer` accepts `day`, `question_id`, prior answer `revision` (0 initially), `choice` (0–2), `skipped`, and optional `elaboration`. Skip uses null choice. Respect conflicts and refresh before correction.
+`qa-army memories questions --project prj_...` / `memories.questions` reads the stable UTC-day Project questions. Ask the customer before selecting intended behavior; never submit a default choice. `qa-army memories answer --project prj_... --input JSON` / `memories.answer` accepts `day`, `question_id`, prior answer `revision` (0 initially), `choice` (0–2), `skipped`, and optional `elaboration`. A skip requires `choice: null` and `skipped: true`; selecting a choice requires `skipped: false`. Respect conflicts and refresh before correction.
 
 All non-skipped answers become owner-review proposals, including owner answers. Treat them as declared intent, not observed Run facts. Publication and canonical retrieval remain server-owned. Inspect earlier conflicting answers before approval. Historical Test expectations and Run snapshots are unchanged. An exhausted set is not permission to invent questions, answers, evidence or confidence.
 

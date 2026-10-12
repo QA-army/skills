@@ -1,6 +1,6 @@
 ---
 name: qa-army-cli
-description: Use the QA.army CLI to create or reuse Projects and durable plain-language Tests, run them in QA.army cloud, and report typed terminal outcomes. Trigger for app QA setup, regression coverage, or remote Web and Mobile Test runs.
+description: Use the QA.army CLI to create or reuse Projects and durable plain-language Tests, run remote Web Tests in QA.army cloud, register native builds, and report typed terminal outcomes. Trigger for app QA setup, regression coverage, remote Web Test runs, or native build registration.
 license: MIT
 metadata:
   author: QA.army
@@ -65,6 +65,11 @@ qa-army tests run <testId> --wait --json
 
 Report the Project ID, Test ID, Run ID, terminal status, outcome summary, and
 live Test Run URL when present.
+
+Native build registration is available for supported Android and iOS artifacts,
+but registration is not native device selection or Mobile Test execution. Do
+not promise or report a native Run; those CLI variants return
+`REQUEST_CAPABILITY`.
 
 ## Missing operations
 

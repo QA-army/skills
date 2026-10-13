@@ -128,8 +128,12 @@ Both commands save the supplied steps directly without server-side generation.
 When execution is requested, follow the API contract to run the Test and
 wait for its terminal result. Preserve the server's outcome:
 
-- A new Workspace includes 10 free Runs with no credit card required. This is
-  an initial allowance, not a monthly reset.
+- Each account includes 10 free Runs every 30 days, shared across all Workspaces,
+  with no credit card required. The fixed 30-day cycle starts when QA.army first
+  activates the account's free allowance. Run, login and Workspace activity do
+  not restart it; creating or joining a Workspace does not add free Runs. Unused
+  free Runs do not roll over.
+- `PASSED` and `FAILED` Runs count toward the allowance. `ERROR` Runs do not.
 - Creating or editing Tests does not authorize execution. Start one Run only
   when the user explicitly requests it; never spend the remaining allowance
   merely because it is available.

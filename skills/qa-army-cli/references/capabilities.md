@@ -59,7 +59,7 @@ remain separate operations.
 
 ## Dynamic PR Tests assisted pilot — DOGFOOD-PENDING
 
-When the Workspace is enrolled and the installed CLI supports them, use `qa-army prs list --project prj_...`, `prs get --verification prv_...`, and `prs usage --workspace wsp_...` for reports and shared usage. MCP equivalents are `prs.list`, `prs.get`, and `prs.usage`.
+When the Workspace is enrolled and the installed CLI supports them, a governed claimed WorkOS agent can read reports with `qa-army prs list --project prj_...` and `prs get --verification prv_...`, and explicitly request a new attempt with `prs rerun --verification prv_... --request-key rerun-pr-001`. MCP equivalents are `prs.list`, `prs.get`, and `prs.rerun`. The server checks the claiming user's current Workspace access and retains preview qualification, current-revision checks, idempotency and Run limits. This permission does not include dynamic settings, configuration, usage, cancellation or promotion; those require a supported user session or profile credential. Deployment-watch permissions are separate.
 
 `prs settings` and `prs configure` use an existing integration ID. Configuration is owner-only and requires the selected GitHub repository, selected Vercel Project, sandbox confirmation, and any required sandbox accounts. Restricted agent setup credentials cannot manage the pilot.
 

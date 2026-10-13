@@ -2,10 +2,12 @@
 
 Paste this prompt into your coding agent for this project. Authentication details,
 including the short-lived user-code handoff, live in [auth.md](https://qa.army/auth.md).
-Each account includes 10 free Runs per UTC calendar month, shared across all
-Workspaces, with no credit card required. The allowance resets monthly; creating
-or joining a Workspace does not add free Runs. This prompt requests one initial
-Run; additional capabilities can be added explicitly. This setup targets Web
+Each account includes 10 free Runs every 30 days, shared across all Workspaces,
+with no credit card required. The fixed 30-day cycle starts when QA.army first
+activates the account's free allowance. Run, login and Workspace activity do not
+restart it; creating or joining a Workspace does not add free Runs. Unused free
+Runs do not roll over. This prompt requests one initial Run; additional
+capabilities can be added explicitly. This setup targets Web
 applications. Native Android, iOS, and Desktop execution are not generally
 available; this prompt does not establish their launch readiness.
 

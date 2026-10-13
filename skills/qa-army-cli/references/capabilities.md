@@ -14,6 +14,7 @@ explains the intended mapping.
 | Test Groups | `list`, `get`, `create`, `update`, `run` (explicit selection, 0.2.10+) |
 | Tests | `list`, `get`, `create`, `update`, `archive`, `delete`, `run` |
 | Runs | `list`, `create`, `get`, `start`, `watch`, `wait`, `cancel`, `evidence` (0.2.10+) |
+| Deployment watch | `prs watch`, `prs watch-update` (0.2.11+, existing connected GitHub watch, Workspace Owner) |
 | Account | `api-keys list`, `api-keys create`, `api-keys revoke` |
 
 `tests run` queues one durable saved Test in QA.army cloud. `--wait` returns the
@@ -43,6 +44,18 @@ capability receipt so product work can add the correct server-owned contract.
 Use `qa-army memories list --project prj_...` to read scoped knowledge. `create` accepts `--input` JSON; `update`, `approve`, `reject`, and `archive` require `--memory mem_... --version N`. `settings` accepts `{ "auto_learn": true }`; `graph`, `summary`, `import`, and `history` use the same Project. `clear` archives Project memory and disables automatic updates.
 
 Use an authenticated user session or profile API key. Setup-only WorkOS agent credentials do not authorize memory management. Treat observations as historical evidence, requirements as intended behavior, and document imports as proposals requiring review. Never store credentials. Memory usage does not establish correctness or prove improvement.
+
+## Existing deployment watch
+
+A claimed agent acting for a Workspace Owner can read an existing connected
+GitHub watch with `prs watch --integration <integrationId>` and update it with
+`prs watch-update --integration <integrationId> --input <JSON>`. Send the full
+`{repository_id, test_group_ids, enabled}` body, preserving the existing numeric
+repository ID string and all Groups not intentionally removed. Groups must belong
+to that Project. Read back the result; do not automatically retry an uncertain
+write or treat saved configuration as a Run result. MCP 0.1.4 exposes `prs.watch`
+and `prs.watch_update`. Integration creation, consent, and dynamic PR settings
+remain separate operations.
 
 ## Dynamic PR Tests assisted pilot — DOGFOOD-PENDING
 

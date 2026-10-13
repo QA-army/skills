@@ -174,3 +174,32 @@ The same claimed WorkOS agent identity supports Test Group management, Test
 updates and Run cancellation. Test deletion, credential access and administration
 remain outside that capability. Never substitute missing screenshots or
 unexecuted steps with a passing result.
+
+## Select regression Test Groups for pull requests
+
+When the user requests deployment-triggered regression coverage, a claimed agent
+acting for a Workspace Owner can manage an existing connected GitHub deployment
+watch with CLI 0.2.11 or MCP 0.1.4. Reuse the same identity; this does not create an
+integration, grant repository access, or authorize provider consent.
+
+1. Read the watch with `qa-army prs watch --integration <integrationId>`
+   or MCP `prs.watch`. Confirm its Project and repository.
+2. Preserve every currently selected Test Group unless the user requested its
+   removal. Add only existing Groups from that same Project.
+3. Submit the complete `{repository_id, test_group_ids, enabled}` body with
+   `qa-army prs watch-update --integration <integrationId> --input <JSON>`.
+   Keep the existing repository ID as a numeric string. MCP `prs.watch_update`
+   accepts those fields plus `integration_id` in one object.
+4. Read the watch again and compare its repository, complete Group selection,
+   and enabled state with the intended change.
+
+This replaces the selection; it is not an add-one-Group operation. No version
+precondition or request key is accepted. Coordinate one writer, reconcile changes
+and conflicts from a fresh read, and do not automatically retry an uncertain
+update. Selecting a Group does not enable disabled Tests or satisfy their
+prerequisites.
+
+Saving a watch does not start a manual Run or establish a pass. The next matching
+qualified deployment requests regression coverage. Track the exact revision and
+actual Runs, then inspect terminal results and evidence. Dynamic PR Tests use
+separate configuration and permissions.

@@ -72,3 +72,26 @@ Cancellation, explicit rerun and regression promotion use `prs cancel`, `prs rer
 All non-skipped answers become owner-review proposals, including owner answers. Treat them as declared intent, not observed Run facts. Publication and canonical retrieval remain server-owned. Inspect earlier conflicting answers before approval. Historical Test expectations and Run snapshots are unchanged. An exhausted set is not permission to invent questions, answers, evidence or confidence.
 
 To revisit a saved set, select its date in Memory, use CLI `memories questions --project prj_... --day YYYY-MM-DD`, or pass `day` to MCP `memories.questions`. The historical API is `GET /v1/projects/{projectId}/memory/clarifications/{day}`. Only existing sets are returned; prior answers remain correctable with revision checks.
+
+## Workspace invitations and private report links
+
+`qa-army invitations create --workspace wsp_... --input JSON` forwards the
+canonical `{emails, return_to?}` body. MCP `invitations.create` takes the same
+fields plus `workspace_id`; optional destination support requires its matching
+client/server release. `return_to` is a raw relative same-Workspace Test or Run
+path; it cannot grant access or point to another origin. The server validates
+resource ancestry and owner permissions.
+
+Invitation management requires a Workspace owner with an authorized user session
+or profile API key. Claimed WorkOS agents and setup credentials cannot invite or
+accept for someone else. Direct recipients to the invitation email and browser
+sign-in using that email, followed by explicit acceptance. CLI/MCP provide no
+recipient acceptance, list, resend or revoke command; use the app for these tasks.
+
+Report links remain Workspace-private. Signing in, copying a report link or
+copying an access-request message does not grant access or send an invitation.
+Ask the person who shared the link to arrange an owner invitation. Preserve
+`SENT` as provider acceptance, not inbox receipt or membership. After an uncertain
+create response, check pending invitations in the app before sending again;
+separate invocations use new request keys. Expired links need owner recovery;
+resend invalidates the earlier link. Do not bypass a denial with another credential.

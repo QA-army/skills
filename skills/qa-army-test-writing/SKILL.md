@@ -52,10 +52,15 @@ The request uses the same types and ordered steps as the Test editor:
 | Act | `act` | One bounded user action, followed by internal outcome verification |
 | Assert | `assert` | One observable expected outcome |
 | Login | `login` | Reference an existing same-Project `account_id`; never embed credentials |
+| Signup | `signup` | Use a canonical assigned `account_id` and `onboarding` with `url`, `email_label`, `password_label`, and `submit_label`; never embed credentials |
+| Verify OTP | `verify_otp` | Use the canonical assigned `account_id` and `onboarding` with `url`, `code_label`, `submit_label`, `sender`, `subject`, `mail_profile`, and `success_text`; never embed credentials |
+| Verify link | `verify_link` | Use the canonical assigned `account_id` and `onboarding` with `origin`, `path`, `sender`, `subject`, `mail_profile`, and `success_text`; never embed credentials |
 | Files | `files` | State the file interaction and available test data |
 | Screenshot | `screenshot` | Capture a useful checkpoint; this is not an assertion |
-| JavaScript | `javascript` | Describe the required browser operation explicitly |
 | Microphone | `microphone` | State the audio interaction and prerequisites |
+
+JavaScript steps (`javascript`) are rejected because the execution runtime does
+not support them; use lowercase wire values.
 
 Steps run in array order. Set `enabled: false` to retain a step but skip it.
 Keep explicit Verify steps for independent and final journey expectations. Screenshot-only Tests are valid: passing means the requested captures completed, not that product behavior was verified. Availability of a step type does not

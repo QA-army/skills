@@ -128,8 +128,8 @@ Both commands save the supplied steps directly without server-side generation.
 When execution is requested, follow the API contract to run the Test and
 wait for its terminal result. Preserve the server's outcome:
 
-- A new Workspace includes 10 free Runs with no credit card required. This is
-  an initial allowance, not a monthly reset.
+- The $0 Free plan includes 10 saved Tests total and 100 Runs total. No credit
+  card is required, and the allowance does not renew monthly.
 - Creating or editing Tests does not authorize execution. Start one Run only
   when the user explicitly requests it; never spend the remaining allowance
   merely because it is available.

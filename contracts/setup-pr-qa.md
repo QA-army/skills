@@ -2,8 +2,8 @@
 
 Paste this prompt into your coding agent for this project. Authentication details,
 including the short-lived user-code handoff, live in [auth.md](https://qa.army/auth.md).
-Each new Workspace includes 10 initial free Runs with no credit card required.
-This starting allowance does not renew monthly. This prompt requests one initial
+The $0 Free plan includes 10 saved Tests total and 100 Runs total. No credit
+card is required, and the allowance does not renew monthly. This prompt requests one initial
 Run; additional capabilities can be added explicitly. This setup targets Web
 applications. Native Android, iOS, and Desktop execution are not generally
 available; this prompt does not establish their launch readiness.
